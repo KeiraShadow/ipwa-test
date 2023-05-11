@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+  <title>Verwaltung</title>
+  <link rel="stylesheet" href="style/style.css" />	
+   <!--FontAwesome-->
+  <script src="https://kit.fontawesome.com/1c50180c6e.js" crossorigin="anonymous"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</h:head>
+<h:body> 
+  <div id="header"></div>  
+  <div id="content">
+   
+    <h1>Verwaltung</h1>
+    <h:outputText value="Number of Benutzers: #{benutzerController.getAllBenutzers().size()}" />
+    <h:outputText value="Benutzername List:" />
+    <ul>
+      <ui:repeat value="#{benutzerBean.allBenutzerNames}" var="benutzername">
+        <li>#{benutzername}</li>
+      </ui:repeat>
+    </ul>
+  
+
+  </div>
+  <div id="footer"></div>
+  <script>
+    $(function() {
+      $("#header").load("header.html");
+      $("#footer").load("footer.html");
+    });
+  </script>
+
+</h:body>
+</html>

@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+  <title>Startseite</title>
+  <link rel="stylesheet" href="style/style.css" />	
+   <!--FontAwesome-->
+  <script src="https://kit.fontawesome.com/1c50180c6e.js" crossorigin="anonymous"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</h:head>
+<h:body> 
+  <div id="header"></div>  
+  <div id="content">
+    <h1>Herzlich Willkommen bei Shea Sepherd</h1> <br/>
+    <h:outputText value="Hier können Sie Geisternetze melden."></h:outputText> <br/> 
+    <!--<h:outputText value="#{artikel.name}"></h:outputText> -->
+    
+  <h:form id="loginPanel">
+	  <p:card>
+			<h:outputText
+				value="Willkommen Melder #{benutzerController.aktuellerBenutzer.name}! "
+				rendered="#{benutzerController.logedIn &amp;&amp; !benutzerController.aktuellerBenutzer.isBerger}" />
+			<h:outputText
+				value="Willkommen Berger #{benutzerController.aktuellerBenutzer.name}! "
+				rendered="#{benutzerController.logedIn &amp;&amp; benutzerController.aktuellerBenutzer.isBerger}" />
+			<p:commandLink value="Logout" action="#{benutzerController.logout()}"
+				rendered="#{benutzerController.logedIn}" update="loginPanel"></p:commandLink>
+
+
+			<h:panelGrid columns="3" rendered="#{!benutzerController.logedIn}">
+				<h:outputLabel value="Name: " for="name" />
+				<p:inputText id="name"
+					value="#{benutzerController.aktuellerBenutzer.name}"
+					required="true" size="40" label="Benutzername">
+					<f:event listener="#{benutzerController.postValidateName}" type="jakarta.faces.event.PostValidateEvent"/>
+				</p:inputText>
+				<p:messages for="name" />
+				
+				<h:outputLabel value="Telefonnummer" for="num" />
+				<p:inputText id="num"
+					value="#{benutzerController.aktuellerBenutzer.telefonnummer}"
+					required="true" size="40" label="Telefonnummer"> 
+				<f:event listener="#{benutzerController.postValidateTelefon}" type="jakarta.faces.event.PostValidateEvent"/>
+				</p:inputText>
+				<p:messages for="num" />
+
+				<h:outputLabel value="Sind sie Berger?" for="isberger" />
+				<p:selectBooleanCheckbox id="isberger"
+					value="#{benutzerController.aktuellerBenutzer.isBerger}">
+					<f:event listener="#{benutzerController.postValidateBerger}" type="jakarta.faces.event.PostValidateEvent"/>
+				</p:selectBooleanCheckbox>
+				<p:messages for="isberger" />
+
+				<h:outputLabel value="Passwort: " for="pass" />
+				<p:password id="pass"
+					value="#{benutzerController.aktuellerBenutzer.passwort}"
+					required="true" size="40" feedback="true" label="Passwort" validator="#{benutzerController.validateLogin}"></p:password>
+					<p:messages for="pass" />
+
+				<p:commandLink value="Login" action="#{benutzerController.login()}"
+					update="loginPanel"></p:commandLink>
+			</h:panelGrid>
+			<p:messages />
+		</p:card>
+	</h:form>
+
+  </div>
+  <div id="footer"></div>
+  <script>
+    $(function() {
+        $("#header").load("header.html");
+        $("#footer").load("footer.html");
+    });
+  </script>
+  
+ 
+</h:body>
+</html>

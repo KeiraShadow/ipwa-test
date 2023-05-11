@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+  <title>Melden</title>
+  <link rel="stylesheet" href="style/style.css" />	
+   <!--FontAwesome-->
+  <script src="https://kit.fontawesome.com/1c50180c6e.js" crossorigin="anonymous"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</h:head>
+<h:body> 
+  <div id="header"></div>  
+  <div id="content">
+   
+    
+    <h1>Melden</h1>
+    
+    <h2>Meldende Person</h2>
+    <h:form>
+        <h:outputText value="Name:" /> 
+        <h:inputText value="#{meldendePerson.name}" />
+        <h:outputText value="Anonym:" /> 
+        <h:selectBooleanCheckbox value="#{meldendePerson.anonymous}" />
+        <h:commandButton value="Submit" action="#{meldendeBean.submitMeldendePerson}" />
+    </h:form>
+    
+    <h2>Bergende Person</h2>
+    <h:form>
+        <h:outputText value="Name:" /> 
+        <h:inputText value="#{bergendePerson.name}" />
+        <h:commandButton value="Submit" action="#{bergendeBean.submitBergendePerson}" />
+    </h:form>
+    
+    <h2>Geisternetz</h2>
+    <h:form>
+        <h:outputText value="Standort:" /> 
+        <h:inputText value="#{geisternetz.standort}"  /><br/>
+        <h:outputText value="Größe:" />
+        <h:inputText value="#{geisternetz.groesse}" /> <br/>
+        <h:outputText value="Status:" />
+        <h:selectOneMenu value="#{geisternetz.status}">
+            <f:selectItem itemValue="Gemeldet" itemLabel="Gemeldet" />
+            <f:selectItem itemValue="Bergung bevorstehend" itemLabel="Bergung bevorstehend" />
+            <f:selectItem itemValue="Geborgen" itemLabel="Geborgen" />
+            <f:selectItem itemValue="Verschollen" itemLabel="Verschollen" />
+        </h:selectOneMenu>
+        <h:commandButton value="Melden" action="#{geisternetzBean.submitGeisternetz}" />
+        <h2>Geisternetze to be Recovered</h2>
+        <ul>
+           <ui:repeat value="#{bergendeBean.geisternetzeToRecover}" var="geisternetz">
+               <li>Standort: #{geisternetz.standort}, Größe: #{geisternetz.groesse}, Status: #{geisternetz.status}</li>
+           </ui:repeat>
+        </ul>
+
+        <h:commandButton value="Für Bergung eintragen" action="#{bergendeBean.registerForBergung(geisternetz)}" />
+    </h:form> 
+  </div>
+  <div id="footer"></div>
+  <script>
+    $(function() {
+        $("#header").load("header.html");
+        $("#footer").load("footer.html");
+    });
+  </script>
+ 
+</h:body>
+</html>
